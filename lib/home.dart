@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const list(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ListPage(),));
                 },
                 style: ElevatedButton.styleFrom(
           
