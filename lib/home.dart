@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/list.dart';
 
 class Home extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
   const Home({Key? key});
 
   @override
