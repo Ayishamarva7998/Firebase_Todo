@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/edit_screen.dart';
+import 'package:todo_app/views/Editscreen/editscreen.dart';
 
-class ListPage extends StatelessWidget {
+
+class listscreen extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
-  const ListPage({Key? key});
+  const listscreen({Key? key});
 
   @override
   Widget build(BuildContext context) {

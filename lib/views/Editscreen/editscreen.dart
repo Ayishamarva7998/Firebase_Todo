@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/list.dart';
+import 'package:todo_app/views/Listscreen/listscreen.dart';
 
 class editscreen extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -55,7 +55,7 @@ class editscreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ListPage(),
+                        builder: (context) => const listscreen(),
                       ));
                 },
                 style: ElevatedButton.styleFrom(),

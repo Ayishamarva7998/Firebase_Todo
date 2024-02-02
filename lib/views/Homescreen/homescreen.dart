@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/list.dart';
+import 'package:todo_app/views/Listscreen/listscreen.dart';
 
 class Home extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -63,7 +63,7 @@ class Home extends StatelessWidget {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ListPage(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const listscreen(),));
                 },
                 style: ElevatedButton.styleFrom(
           
@@ -84,4 +84,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
