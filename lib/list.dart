@@ -28,7 +28,7 @@ class ListPage extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => editscreen(),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const editscreen(),));
                      
                       },
                     ),

@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/list.dart';
 
@@ -14,6 +16,12 @@ class editscreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const CircleAvatar(
+                radius: 60,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: 'Name',
@@ -24,54 +32,36 @@ class editscreen extends StatelessWidget {
               TextFormField(
                 obscureText: true,
                 decoration: const InputDecoration(
-                  
                   labelText: 'Class',
                   border: OutlineInputBorder(),
                 ),
-                
               ),
-              const SizedBox(height: 16,),
-                   TextFormField(
+              const SizedBox(
+                height: 16,
+              ),
+              TextFormField(
                 obscureText: true,
                 decoration: const InputDecoration(
-                  
                   labelText: 'Roll no',
                   border: OutlineInputBorder(),
                 ),
-                
               ),
-              const SizedBox(height: 16,),
-              ElevatedButton(onPressed: (){}, child: const Row(
-                children: [
-                  Icon(Icons.photo_camera),
-                  SizedBox(width: 90,),
-                  Text("Take photo")
-                ],
-              )),
-                    const SizedBox(height: 16,),
-              ElevatedButton(onPressed: (){}, child: const Row(
-                children: [
-                  Icon(Icons.photo_library),
-                  SizedBox(width: 90,),
-                  Text("Choose from Gallery")
-                ],
-              )),
-
-              
-              
-
+              const SizedBox(
+                height: 16,
+              ),
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ListPage(),));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ListPage(),
+                      ));
                 },
-                style: ElevatedButton.styleFrom(
-          
-                ),
+                style: ElevatedButton.styleFrom(),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
-                  child: 
-                  Text(
+                  child: Text(
                     'Save',
                     style: TextStyle(fontSize: 18),
                   ),
@@ -84,4 +74,3 @@ class editscreen extends StatelessWidget {
     );
   }
 }
-
