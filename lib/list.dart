@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/edit_screen.dart';
 
 class ListPage extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
@@ -27,6 +28,7 @@ class ListPage extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.edit),
                       onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => editscreen(),));
                      
                       },
                     ),
