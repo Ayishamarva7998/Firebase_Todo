@@ -1,5 +1,7 @@
 
 
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,7 @@ class list extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Student Details",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
