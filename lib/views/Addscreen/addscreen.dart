@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/controllers/homeprovider.dart';
+import 'package:todo_app/model.dart';
 import 'package:todo_app/views/Listscreen/listscreen.dart';
 
-class Home extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const Home({Key? key});
+
+class Addscreen extends StatelessWidget {
+  
+
+   Addscreen({super.key,});
+  TextEditingController namecontroller=TextEditingController();
+     TextEditingController clascontroller=TextEditingController();
+      TextEditingController rollnocontroller=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -15,6 +24,8 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: namecontroller,
+                
                 decoration: const InputDecoration(
                   labelText: 'Name',
                   border: OutlineInputBorder(),
@@ -22,6 +33,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
+              controller: clascontroller,
                 obscureText: true,
                 decoration: const InputDecoration(
                   
@@ -32,6 +44,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 16,),
                    TextFormField(
+                    controller:rollnocontroller ,
                 obscureText: true,
                 decoration: const InputDecoration(
                   
@@ -63,7 +76,8 @@ class Home extends StatelessWidget {
               const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const listscreen(),));
+                  addstudent(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const list(),));
                 },
                 style: ElevatedButton.styleFrom(
           
@@ -82,5 +96,22 @@ class Home extends StatelessWidget {
         ),
       ),
     );
+  }
+  void addstudent(BuildContext context) async {
+    final pro = Provider.of<StudentProvider>(context, listen: false);
+   final name = namecontroller.text;
+   final cls =clascontroller.text;
+   final rollno = rollnocontroller;
+  
+
+ final student = StudentModel(
+  rollno: rollno.text,
+  classs: cls,
+  name: name,
+  image: '',
+
+ );
+ pro.addStudent(student);
+ 
   }
 }
