@@ -5,19 +5,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/controllers/homeprovider.dart';
+import 'package:todo_app/controllers/Student_provider.dart';
 import 'package:todo_app/model.dart';
-import 'package:todo_app/views/Editscreen/editscreen.dart';
-import 'package:todo_app/views/Addscreen/addscreen.dart';
+import 'package:todo_app/views/editscreen/edit_screen.dart';
+import 'package:todo_app/views/addscreen/add_screen.dart';
+import 'package:todo_app/views/details.dart';
 
 
-class list extends StatelessWidget {
-  const list({super.key});
+class ListScreen extends StatelessWidget {
+  const ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "Student Details",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -63,13 +65,13 @@ class list extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Age: ${data.rollno ?? 'N/A'}",
+                                      "class: ${data.rollno ?? 'N/A'}",
                                       style: const TextStyle(
                                         color: Colors.grey,
                                       ),
                                     ),
                                     Text(
-                                      "Class: ${data.classs ?? 'N/A'}",
+                                      "roll no: ${data.age ?? 'N/A'}",
                                       style: const TextStyle(
                                         color: Colors.grey,
                                       ),
@@ -89,7 +91,7 @@ class list extends StatelessWidget {
                                         color: Colors.blue,
                                       ),
                                       onPressed: () {
-                                        value.updateStudent(id, StudentModel(image: '',classs: '',name: '',rollno: ''));
+                                        value.updateStudent(id, StudentModel(image: '',age: '',name: '',rollno: ''));
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
@@ -112,21 +114,13 @@ class list extends StatelessWidget {
                                         // value.deleteImage(data.image);
                                       },
                                     ),
-                                    // const Icon(
-                                    //   Icons.arrow_forward_ios,
-                                    //   color: Colors.deepPurple,
-                                    // ),
+                                    IconButton(onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(student: data),));
+                                    }, icon: Icon(Icons.arrow_forward_ios))
+                               
                                   ],
                                 ),
-                                // onTap: () {
-                                //   Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           DetailScreen(student: data),
-                                //     ),
-                                //   );
-                                // },
+                           
                               ),
                             );
                           },
@@ -145,7 +139,7 @@ class list extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Addscreen(),
+              builder: (context) => AddScreen(),
             ),
           );
         },

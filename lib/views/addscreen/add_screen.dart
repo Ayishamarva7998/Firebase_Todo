@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/controllers/homeprovider.dart';
+import 'package:todo_app/controllers/Student_provider.dart';
 import 'package:todo_app/model.dart';
-import 'package:todo_app/views/Listscreen/listscreen.dart';
+import 'package:todo_app/views/Listscreen/list_screen.dart';
 
 
 // ignore: must_be_immutable
-class Addscreen extends StatelessWidget {
+class AddScreen extends StatelessWidget {
   
 
-   Addscreen({super.key,});
+   AddScreen({super.key,});
   TextEditingController namecontroller=TextEditingController();
-     TextEditingController clascontroller=TextEditingController();
+     TextEditingController agecontroller=TextEditingController();
       TextEditingController rollnocontroller=TextEditingController();
 
   @override
@@ -19,6 +19,9 @@ class Addscreen extends StatelessWidget {
     
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back))),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -34,7 +37,7 @@ class Addscreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               TextFormField(
-              controller: clascontroller,
+              controller: agecontroller,
                 obscureText: true,
                 decoration: const InputDecoration(
                   
@@ -78,7 +81,7 @@ class Addscreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   addstudent(context);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const list(),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ListScreen(),));
                 },
                 style: ElevatedButton.styleFrom(
           
@@ -101,13 +104,13 @@ class Addscreen extends StatelessWidget {
   void addstudent(BuildContext context) async {
     final pro = Provider.of<StudentProvider>(context, listen: false);
    final name = namecontroller.text;
-   final cls =clascontroller.text;
+   final age =agecontroller.text;
    final rollno = rollnocontroller;
   
 
  final student = StudentModel(
   rollno: rollno.text,
-  classs: cls,
+  age: age,
   name: name,
   image: '',
 

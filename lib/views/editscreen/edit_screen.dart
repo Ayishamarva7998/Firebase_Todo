@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/controllers/homeprovider.dart';
+import 'package:todo_app/controllers/Student_provider.dart';
 import 'package:todo_app/model.dart';
 
 // ignore: must_be_immutable
@@ -21,7 +21,7 @@ class _EditScreenState extends State<EditScreen> {
 
   TextEditingController nameController = TextEditingController();
 
-  TextEditingController classsController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
     TextEditingController imageController = TextEditingController();
 
   @override
@@ -29,7 +29,7 @@ class _EditScreenState extends State<EditScreen> {
     super.initState();
 
     nameController.text = widget.student.name ?? '';
-    classsController.text = widget.student.classs ?? '';
+    ageController.text = widget.student.age ?? '';
     rollnoController.text = widget.student.rollno ?? "";
   }
 
@@ -67,7 +67,7 @@ class _EditScreenState extends State<EditScreen> {
                 height: 10,
               ),
               TextFormField(
-                  controller: classsController,
+                  controller: ageController,
                   decoration: InputDecoration(
                       hintText: "class",
                       border: OutlineInputBorder(
@@ -106,7 +106,7 @@ class _EditScreenState extends State<EditScreen> {
     try {
       final editedname = nameController.text;
       final editedrollno = rollnoController.text;
-      final editclass = classsController.text;
+      final editedage = ageController.text;
       final editedimage = imageController.text;
 
       // Update image URL in Firestore
@@ -114,7 +114,7 @@ class _EditScreenState extends State<EditScreen> {
       final updatedstudent = StudentModel(
         name: editedname,
         rollno: editedrollno,
-        classs: editclass,
+        age: editedage,
         image: editedimage,
       );
 
