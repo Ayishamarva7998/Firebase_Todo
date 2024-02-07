@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/controllers/Student_provider.dart';
+import 'package:todo_app/controllers/imageprovider.dart';
 import 'package:todo_app/model.dart';
 import 'package:todo_app/views/Listscreen/list_screen.dart';
 
@@ -16,7 +20,7 @@ class AddScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    final pro = Provider.of<ImageProviderr>(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(leading: IconButton(onPressed: (){
@@ -58,22 +62,41 @@ class AddScreen extends StatelessWidget {
                 
               ),
               const SizedBox(height: 16,),
-              ElevatedButton(onPressed: (){}, child: const Row(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.photo_camera),
-                  SizedBox(width: 90,),
-                  Text("Take photo")
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pro.setImage(ImageSource.camera);
+                    },
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text('Take Photo'),
+                  ),
+                  const SizedBox(
+                    width: 14.0,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pro.setImage(ImageSource.gallery);
+                    },
+                    icon: const Icon(Icons.photo),
+                    label: const Text('Choose from Gallery'),
+                  ),
                 ],
-              )),
-                    const SizedBox(height: 16,),
-              ElevatedButton(onPressed: (){}, child: const Row(
-                children: [
-                  Icon(Icons.photo_library),
-                  SizedBox(width: 90,),
-                  Text("Choose from Gallery")
-                ],
-              )),
-
+              ),
+            if (pro.selectedImage != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: Image.file(
+                      pro.selectedImage!,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               
               
 
@@ -103,16 +126,18 @@ class AddScreen extends StatelessWidget {
   }
   void addstudent(BuildContext context) async {
     final pro = Provider.of<StudentProvider>(context, listen: false);
+    final provider = Provider.of<ImageProviderr>(context, listen: false);
    final name = namecontroller.text;
    final age =agecontroller.text;
    final rollno = rollnocontroller;
-  
+
+   await pro.imageAdder(File(provider.selectedImage!.path));
 
  final student = StudentModel(
   rollno: rollno.text,
   age: age,
   name: name,
-  image: '',
+  image: pro.downloadurl,
 
  );
  pro.addStudent(student);

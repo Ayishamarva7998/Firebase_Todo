@@ -80,7 +80,7 @@ class ListScreen extends StatelessWidget {
                                 ),
                                 leading: CircleAvatar(
                                   backgroundColor: Colors.deepPurple,
-                                  backgroundImage: NetworkImage(data.image!),
+                                  backgroundImage:NetworkImage(data.image!),
                                 ),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
