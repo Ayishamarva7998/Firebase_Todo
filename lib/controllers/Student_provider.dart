@@ -1,4 +1,4 @@
-// studentprovider.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:todo_app/model.dart';
 import 'package:todo_app/services/service.dart';
 
 class StudentProvider extends ChangeNotifier {
+  // ignore: prefer_final_fields
   FirebaseService _firebaseService = FirebaseService();
   String uniquename = DateTime.now().microsecondsSinceEpoch.toString();
   String downloadurl = '';
@@ -38,6 +39,7 @@ class StudentProvider extends ChangeNotifier {
       await images.putFile(image);
       downloadurl = await images.getDownloadURL();
       notifyListeners();
+      // ignore: avoid_print
       print(downloadurl);
     } catch (e) {
       throw Exception(e);

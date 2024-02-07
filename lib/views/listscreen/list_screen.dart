@@ -116,7 +116,7 @@ class ListScreen extends StatelessWidget {
                                     ),
                                     IconButton(onPressed: (){
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(student: data),));
-                                    }, icon: Icon(Icons.arrow_forward_ios))
+                                    }, icon: const Icon(Icons.arrow_forward_ios))
                                
                                   ],
                                 ),

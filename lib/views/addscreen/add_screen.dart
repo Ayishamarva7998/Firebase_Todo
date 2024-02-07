@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/controllers/Student_provider.dart';
-import 'package:todo_app/controllers/imageprovider.dart';
+import 'package:todo_app/controllers/image_provider.dart';
+
 import 'package:todo_app/model.dart';
 import 'package:todo_app/views/Listscreen/list_screen.dart';
 
@@ -25,7 +25,7 @@ class AddScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(leading: IconButton(onPressed: (){
           Navigator.pop(context);
-        }, icon: Icon(Icons.arrow_back))),
+        }, icon: const Icon(Icons.arrow_back))),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
