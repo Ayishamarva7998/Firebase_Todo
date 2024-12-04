@@ -119,7 +119,7 @@ class _EditScreenState extends State<EditScreen> {
       );
 
       // Update student information in Firestore
-      pro.updateStudent(widget.id, updatedstudent);
+      //pro.updateStudent(widget.id, updatedstudent);
 
       Navigator.pop(context);
     } catch (e) {
