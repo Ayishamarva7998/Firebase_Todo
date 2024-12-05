@@ -1,21 +1,27 @@
-
-
 // ignore_for_file: camel_case_types
 
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/controllers/Student_provider.dart';
-import 'package:todo_app/model.dart';
-import 'package:todo_app/views/editscreen/edit_screen.dart';
+import 'package:todo_app/model/model.dart';
+import 'package:todo_app/services/service.dart';
 import 'package:todo_app/views/addscreen/add_screen.dart';
-import 'package:todo_app/views/details.dart';
+import 'package:todo_app/views/listscreen/widgets/video_player_widget.dart';
 
-
-class ListScreen extends StatelessWidget {
+class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
+
+  @override
+  State<ListScreen> createState() => _ListScreenState();
+}
+
+class _ListScreenState extends State<ListScreen> {
+  final FirebaseService _firebaseService = FirebaseService();
+  late Future<List<VideoModel>> _videosFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _videosFuture = _firebaseService.fetchVideos();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,121 +29,35 @@ class ListScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
-          "Student Details",
+          "Video player",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: Column(children: [
-        Expanded(
-          child: Consumer<StudentProvider>(
-            builder: (context, value, child) => Column(
-              children: [
-                
-                // StreamBuilder<QuerySnapshot<StudentModel>>(
-                //   stream: value.getData(),
-                //   builder: (context, snapshot) {
-                //     if (snapshot.connectionState == ConnectionState.waiting) {
-                //       return const Center(child: CircularProgressIndicator());
-                //     } else if (snapshot.hasError) {
-                //       log("Snapshot Error ${snapshot.error}");
-                //       return const Center(
-                //         child: Text('Snapshot has error'),
-                //       );
-                //     } else {
-                //       List<QueryDocumentSnapshot<StudentModel>> studentsDoc =
-                //           snapshot.data?.docs ?? [];
-                //       return Expanded(
-                //         child: ListView.builder(
-                //           itemCount: studentsDoc.length,
-                //           itemBuilder: (context, index) {
-                //             final data = studentsDoc[index].data();
-                //             final id = studentsDoc[index].id;
-                //             return Card(
-                //               elevation:
-                //                   5, // Add elevation for a card-like look
-                //               margin: const EdgeInsets.all(8),
-                //               child: ListTile(
-                //                 title: Text(
-                //                   data.name ?? '',
-                //                   style: const TextStyle(
-                //                     fontWeight: FontWeight.bold,
-                //                     fontSize: 18,
-                //                   ),
-                //                 ),
-                //                 subtitle: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text(
-                //                       "class: ${data.rollno ?? 'N/A'}",
-                //                       style: const TextStyle(
-                //                         color: Colors.grey,
-                //                       ),
-                //                     ),
-                //                     Text(
-                //                       "roll no: ${data.age ?? 'N/A'}",
-                //                       style: const TextStyle(
-                //                         color: Colors.grey,
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //                 leading: CircleAvatar(
-                //                   backgroundColor: Colors.deepPurple,
-                //                   backgroundImage:NetworkImage(data.image??''),
-                //                 ),
-                //                 trailing: Row(
-                //                   mainAxisSize: MainAxisSize.min,
-                //                   children: [
-                //                     IconButton(
-                //                       icon: const Icon(
-                //                         Icons.edit,
-                //                         color: Colors.blue,
-                //                       ),
-                //                       onPressed: () {
-                //                         value.updateStudent(id, StudentModel(image: '',age: '',name: '',rollno: ''));
-                //                         Navigator.push(
-                //                           context,
-                //                           MaterialPageRoute(
-                //                             builder: (context) => EditScreen(
+      body: FutureBuilder<List<VideoModel>>(
+        future: _videosFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error loading videos'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No videos found'));
+          }
 
-                //                               id: id,
-                //                               student: data,
-                //                             ),
-                //                           ),
-                //                         );
-                //                       },
-                //                     ),
-                //                     IconButton(
-                //                       icon: const Icon(
-                //                         Icons.delete,
-                //                         color: Colors.red,
-                //                       ),
-                //                       onPressed: () {
-                //                         value.deleteStudent(id);
-                //                         // value.deleteImage(data.image);
-                //                       },
-                //                     ),
-                //                     IconButton(onPressed: (){
-                //                       Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(student: data),));
-                //                     }, icon: const Icon(Icons.arrow_forward_ios))
-                               
-                //                   ],
-                //                 ),
-                           
-                //               ),
-                //             );
-                //           },
-                //         ),
-                //       );
-                //     }
-                //   },
-                // ),
-              ],
-            ),
-          ),
-        ),
-      ]),
+          final videos = snapshot.data!;
+          return ListView.separated(
+            separatorBuilder: (context, index) {
+              return Divider();
+            },
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            itemCount: videos.length,
+            itemBuilder: (context, index) {
+              return VideoPlayerWidget(videoUrl: videos[index].videoUrl);
+            },
+          );
+        },
+      ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
           Navigator.push(

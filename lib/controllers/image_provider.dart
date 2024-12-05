@@ -8,7 +8,6 @@ class ImageProviderr extends ChangeNotifier {
 
   void setImage(ImageSource source) async {
     final pickedImage = await imagePicker.pickImage(source: source);
-
     selectedImage = pickedImage != null ? File(pickedImage.path) : null;
     notifyListeners();
   }

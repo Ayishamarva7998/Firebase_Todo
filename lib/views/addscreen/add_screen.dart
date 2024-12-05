@@ -1,13 +1,9 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/controllers/Student_provider.dart';
 import 'package:todo_app/controllers/image_provider.dart';
-
-import 'package:todo_app/model.dart';
 import 'package:todo_app/services/service.dart';
 import 'package:todo_app/views/Listscreen/list_screen.dart';
 
@@ -38,7 +34,7 @@ class AddScreen extends StatelessWidget {
                 controller: namecontroller,
                 
                 decoration: const InputDecoration(
-                  labelText: 'Name',
+                  labelText: 'Video title',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -48,43 +44,43 @@ class AddScreen extends StatelessWidget {
                 obscureText: true,
                 decoration: const InputDecoration(
                   
-                  labelText: 'Class',
+                  labelText: 'Details ',
                   border: OutlineInputBorder(),
                 ),
                 
               ),
               const SizedBox(height: 16,),
-                   TextFormField(
-                    controller:rollnocontroller ,
-                obscureText: true,
-                decoration: const InputDecoration(
+              //      TextFormField(
+              //       controller:rollnocontroller ,
+              //   obscureText: true,
+              //   decoration: const InputDecoration(
                   
-                  labelText: 'Roll no',
-                  border: OutlineInputBorder(),
-                ),
+              //     labelText: '',
+              //     border: OutlineInputBorder(),
+              //   ),
                 
-              ),
+              // ),
               const SizedBox(height: 16,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pro.setImage(ImageSource.camera);
-                    },
-                    icon: const Icon(Icons.camera_alt),
-                    label: const Text('Take Photo'),
-                  ),
-                  const SizedBox(
-                    width: 14.0,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pro.setImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.photo),
-                    label: const Text('Choose from Gallery'),
-                  ),
+                //   ElevatedButton.icon(
+                //     onPressed: () {
+                //       pro.setImage(ImageSource.camera);
+                //     },
+                //     icon: const Icon(Icons.camera_alt),
+                //     label: const Text('Take Photo'),
+                //   ),
+                //   const SizedBox(
+                //     width: 14.0,
+                //   ),
+                //   ElevatedButton.icon(
+                //     onPressed: () {
+                //       pro.setImage(ImageSource.gallery);
+                //     },
+                //     icon: const Icon(Icons.photo),
+                //     label: const Text('Choose from Gallery'),
+                //   ),
                 ],
               ),
             if (pro.selectedImage != null)
@@ -141,7 +137,8 @@ class AddScreen extends StatelessWidget {
           ),
         );
       },
-      child: const Text('Upload Video'),
+      child:  Container(
+        height: 200,width: 200,color: const Color.fromARGB(255, 158, 152, 152),child: Center(child: Text('Upload video')),),
     ),
   
             ],
