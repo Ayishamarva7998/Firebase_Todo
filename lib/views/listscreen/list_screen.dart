@@ -26,11 +26,13 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: const Text(
           "Video player",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),
         ),
         centerTitle: true,
       ),
@@ -68,10 +70,10 @@ class _ListScreenState extends State<ListScreen> {
           );
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
         ),
         child: const Text(
-          'Add',
+          'Upload video',
           style: TextStyle(color: Colors.white),
         ),
       ),

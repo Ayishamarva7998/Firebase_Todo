@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:provider/provider.dart';
 import 'package:todo_app/controllers/image_provider.dart';
 import 'package:todo_app/services/service.dart';
@@ -22,19 +22,28 @@ class AddScreen extends StatelessWidget {
     final pro = Provider.of<ImageProviderr>(context);
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(leading: IconButton(onPressed: (){
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Text("Add videos",style: TextStyle(color: const Color.fromARGB(255, 146, 64, 58)),),
+          leading: IconButton(onPressed: (){
           Navigator.pop(context);
         }, icon: const Icon(Icons.arrow_back))),
-        body: Padding(
+        body: 
+        Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              
+              
               TextFormField(
                 controller: namecontroller,
                 
                 decoration: const InputDecoration(
                   labelText: 'Video title',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 152, 50, 42)),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -45,6 +54,7 @@ class AddScreen extends StatelessWidget {
                 decoration: const InputDecoration(
                   
                   labelText: 'Details ',
+                  labelStyle: TextStyle(color: Color.fromARGB(255, 152, 50, 42)),
                   border: OutlineInputBorder(),
                 ),
                 
@@ -138,7 +148,9 @@ class AddScreen extends StatelessWidget {
         );
       },
       child:  Container(
-        height: 200,width: 200,color: const Color.fromARGB(255, 158, 152, 152),child: Center(child: Text('Upload video')),),
+        // height: 200,width: 200,
+        height: 90,
+        color: const Color.fromARGB(255, 171, 150, 150),child: Center(child: Text('Upload video',style: TextStyle(color: const Color.fromARGB(255, 182, 65, 56)),)),),
     ),
   
             ],
