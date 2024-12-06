@@ -1,10 +1,5 @@
-
-
 // ignore_for_file: camel_case_types
 
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:todo_app/model/model.dart';
@@ -13,7 +8,6 @@ import 'package:todo_app/services/service.dart';
 import 'package:todo_app/views/addscreen/add_screen.dart';
 
 import 'package:todo_app/views/listscreen/widgets/video_player_widget.dart';
-
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -35,11 +29,13 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: const Text(
-          "Student Details",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          "Videoplayer",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
         ),
         centerTitle: true,
       ),
@@ -57,7 +53,7 @@ class _ListScreenState extends State<ListScreen> {
           final videos = snapshot.data!;
           return ListView.separated(
             separatorBuilder: (context, index) {
-              return Divider();
+              return const Divider();
             },
             padding: const EdgeInsets.symmetric(vertical: 10),
             itemCount: videos.length,
@@ -72,16 +68,16 @@ class _ListScreenState extends State<ListScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>  AddScreen(),
+              builder: (context) => AddScreen(),
             ),
           );
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.purple),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
         ),
         child: const Text(
-          'Add',
-          style: TextStyle(color: Colors.white),
+          'Upload videos',
+          style: TextStyle(color: Colors.black),
         ),
       ),
     );

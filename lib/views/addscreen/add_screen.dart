@@ -1,170 +1,207 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
 import 'package:todo_app/controllers/image_provider.dart';
-
-import 'package:todo_app/model.dart';
 import 'package:todo_app/services/service.dart';
 import 'package:todo_app/views/Listscreen/list_screen.dart';
 
-
-// ignore: must_be_immutable
 class AddScreen extends StatelessWidget {
-  
-
-   AddScreen({super.key,});
-  TextEditingController namecontroller=TextEditingController();
-     TextEditingController agecontroller=TextEditingController();
-      TextEditingController rollnocontroller=TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final pro = Provider.of<ImageProviderr>(context);
+
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(leading: IconButton(onPressed: (){
-          Navigator.pop(context);
-        }, icon: const Icon(Icons.arrow_back))),
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+            color: const Color.fromARGB(255, 119, 115, 115),
+          ),
+          backgroundColor: Colors.black,
+          elevation: 10,
+          title: const Text(
+            'Upload Video',
+            style: TextStyle(
+                color: Color.fromARGB(255, 179, 170, 170),
+                fontWeight: FontWeight.bold),
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: namecontroller,
-                
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Title Section
+                const SizedBox(height: 20),
+                const Text(
+                  'Share Your Video',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-              controller: agecontroller,
-                obscureText: true,
-                decoration: const InputDecoration(
+                const SizedBox(height: 8),
+                const Text(
+                  'Share your awesome content by uploading a video.',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(height: 30),
+
+             
+                if (pro.selectedImage != null)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16.0),
+                      child: Container(
+                        height: 200,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                          gradient: const LinearGradient(
+                            colors: [
+                              Colors.red,
+                              Color.fromARGB(255, 122, 23, 16)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 4,
+                              blurRadius: 10,
+                              offset: const Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: Image.file(
+                          pro.selectedImage!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+
+            
+                const SizedBox(height: 30),
+                const Text(
+                  'Select a Video to Upload',
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 119, 115, 115)),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Choose a video from your device to upload.',
+                  style: TextStyle(
+                      fontSize: 14, color: Color.fromARGB(255, 119, 115, 115)),
+                ),
+                const SizedBox(height: 20),
+
+               
+                Center(
+                  child: GestureDetector(
+                    onTap: () async {
+                      try {
+                      
+                        final result = await FilePicker.platform.pickFiles(
+                          type: FileType.video,
+                          allowMultiple: false,
+                        );
+
+                        if (result != null) {
+                          
+                          final file = File(result.files.single.path!);
+
+                         
+                          final firebaseService = FirebaseService();
+                          final String videoUrl =
+                              await firebaseService.uploadVideoToStorage(file);
+
+                          await firebaseService.addVideo(
+                              'recipientId', videoUrl);
+
+                          print('Video uploaded successfully: $videoUrl');
+                        } else {
+                          print('No file selected');
+                        }
+                      } catch (e) {
+                        print('Error picking or uploading video: $e');
+                      }
+
                   
-                  labelText: 'Class',
-                  border: OutlineInputBorder(),
-                ),
-                
-              ),
-              const SizedBox(height: 16,),
-                   TextFormField(
-                    controller:rollnocontroller ,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  
-                  labelText: 'Roll no',
-                  border: OutlineInputBorder(),
-                ),
-                
-              ),
-              const SizedBox(height: 16,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pro.setImage(ImageSource.camera);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListScreen(),
+                        ),
+                      );
                     },
-                    icon: const Icon(Icons.camera_alt),
-                    label: const Text('Take Photo'),
-                  ),
-                  const SizedBox(
-                    width: 14.0,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pro.setImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.photo),
-                    label: const Text('Choose from Gallery'),
-                  ),
-                ],
-              ),
-            if (pro.selectedImage != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: Image.file(
-                      pro.selectedImage!,
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
+                    child: Container(
+                      width: 300,
+                      height: 55,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Colors.red,
+                            Color.fromARGB(255, 96, 17, 12)
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            spreadRadius: 3,
+                            blurRadius: 8,
+                          ),
+                        ],
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Upload Video',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              
-              
 
-              const SizedBox(height: 32),
-             ElevatedButton(
-      onPressed: () async {
-        try {
-          // Pick a video file
-          final result = await FilePicker.platform.pickFiles(
-            type: FileType.video,
-            allowMultiple: false,
-          );
+                const SizedBox(height: 30),
 
-          if (result != null) {
-            // Get the selected file
-            final file = File(result.files.single.path!);
-
-            // Upload the video to Firebase Storage
-            final firebaseService = FirebaseService();
-            final String videoUrl =
-                await firebaseService.uploadVideoToStorage(file);
-
-            // Optional: Add metadata (e.g., video URL) to Firestore
-            await firebaseService.addVideo('recipientId', videoUrl);
-
-            print('Video uploaded successfully: $videoUrl');
-          } else {
-            print('No file selected');
-          }
-        } catch (e) {
-          print('Error picking or uploading video: $e');
-        }
-
-        // Navigate to the ListScreen
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ListScreen(),
-          ),
-        );
-      },
-      child: const Text('Upload Video'),
-    ),
-  
-            ],
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        color: Colors.grey,
+                        size: 18,
+                      ),
+                      SizedBox(width: 8),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-//   void addstudent(BuildContext context) async {
-//     final pro = Provider.of<StudentProvider>(context, listen: false);
-//     final provider = Provider.of<ImageProviderr>(context, listen: false);
-//    final name = namecontroller.text;
-//    final age =agecontroller.text;
-//    final rollno = rollnocontroller;
-//    await pro.imageAdder(File(provider.selectedImage?.path??''));
-//  final student = StudentModel(
-//   rollno: rollno.text,
-//   age: age,
-//   name: name,
-//   image: pro.downloadurl,
-
-//  );
-//  pro.addStudent(student);
- 
-//   }
 }

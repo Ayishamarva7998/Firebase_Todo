@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/controllers/image_provider.dart';
 import 'package:todo_app/services/firebase_options.dart';
 import 'package:todo_app/views/listscreen/list_screen.dart';
+import 'package:todo_app/views/splashscreen/splash_screen.dart';
 
 
 void main()async{
@@ -28,9 +29,9 @@ class MyApp extends StatelessWidget{
         ],
       
       
-    child:   const MaterialApp(
+    child:   MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:ListScreen() ,
+      home:SplashScreen() ,
     ),
     );
     
