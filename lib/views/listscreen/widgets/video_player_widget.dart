@@ -49,7 +49,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
             });
           },
           child: CircleAvatar(
-            // ignore: sort_child_properties_last
             child: Icon(
                 controller.value.isPlaying
                     ? Icons.pause
